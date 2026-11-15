@@ -1,5 +1,6 @@
-// The bot's chat greetings (lichess/config.yml) must fit Lichess's 140-character
-// chat limit once lichess/run.sh has put the engine's version in: lichess-bot
+// The bot's chat greetings (lichess/config.yml, the deployed copy of
+// braveheart-lichess-bot's config.yml) must fit Lichess's 140-character chat
+// limit once the bot's entrypoint has put the engine's version in: lichess-bot
 // drops a longer message without sending it, so an over-long greeting would
 // fail silently. Checked with a 9-character version (`v10.10.10`), longer than
 // any release so far.
@@ -21,7 +22,7 @@ test("all four greetings are present", () => {
   assert.deepEqual(Object.keys(greetings).sort(), ["goodbye", "goodbye_spectators", "hello", "hello_spectators"]);
 });
 
-test("the hellos carry the version token, filled in by run.sh", () => {
+test("the hellos carry the version token, filled in by the entrypoint", () => {
   assert.match(greetings.hello, /__VERSION__/);
   assert.match(greetings.hello_spectators, /__VERSION__/);
 });
