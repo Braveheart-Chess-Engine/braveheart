@@ -1,6 +1,10 @@
-# lichess-bot configuration for braveheart. Copied next to the lichess-bot
-# checkout by lichess/run.sh, which also fills in the token from the
-# LICHESS_TOKEN environment variable. Everything else lives here, versioned.
+# The deployed Lichess bot's lichess-bot configuration. The bot itself (this
+# config's home, the script that runs it locally and its documentation) lives
+# in https://github.com/Braveheart-Chess/braveheart-lichess-bot. This copy
+# stays only because the deployment still reads it: each release's image is
+# built with this file, as jwall-engineering-sites.yaml names it. Change the
+# bot repository's config.yml first and make the same change here; the file
+# goes when the deployment moves there (braveheart-lichess-bot issue 3).
 
 token: "LICHESS_TOKEN_PLACEHOLDER"
 url: "https://lichess.org/"
@@ -90,10 +94,9 @@ challenge:
   bullet_requires_increment: false
   max_simultaneous_games_per_user: 1
 
-# Chat messages. __VERSION__ is filled in by lichess/run.sh (and by the
-# deployed bot's entrypoint) from `braveheart --version`, so a game's chat
-# says which release is playing; lichess-bot itself only substitutes {me} and
-# {opponent}. Lichess caps a chat message at 140 characters and lichess-bot
+# Chat messages. __VERSION__ is filled in by the deployed bot's entrypoint
+# from `braveheart --version`, so a game's chat says which release is
+# playing; lichess-bot itself only substitutes {me} and {opponent}. Lichess caps a chat message at 140 characters and lichess-bot
 # drops a longer one without sending it, so each line below must fit with a
 # version up to 9 characters long (`npm test` checks).
 greeting:

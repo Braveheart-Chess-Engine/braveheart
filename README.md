@@ -95,7 +95,9 @@ To watch the engine play other engines locally, see
 [tools/engine-battle/README.md](tools/engine-battle/README.md): EngineBattle,
 with Stockfish and Viridithas as opponents, for viewing rather than measuring.
 
-To play it or watch it on Lichess, see [lichess/README.md](lichess/README.md).
+To play it or watch it on Lichess, see
+[braveheart-lichess-bot](https://github.com/Braveheart-Chess/braveheart-lichess-bot),
+the bot's own repository.
 
 ## Phases
 
