@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.54.0](https://github.com/Braveheart-Chess/braveheart/compare/v0.53.0...v0.54.0) (2026-11-15)
+
+
+### Features
+
+* move the cloud project and buckets to the braveheart name ([#267](https://github.com/Braveheart-Chess/braveheart/issues/267)) ([d280a60](https://github.com/Braveheart-Chess/braveheart/commit/d280a600ebd88dc814e67b8a5162af83b7a092b6))
+
+
+### Documentation
+
+* **branding:** add SVG versions of the logo ([#265](https://github.com/Braveheart-Chess/braveheart/issues/265)) ([71cfd05](https://github.com/Braveheart-Chess/braveheart/commit/71cfd05fa86f3e766324220f38ccf09dcd5a01b1))
+
 ## [0.53.0](https://github.com/jwallace145/braveheart/compare/v0.52.0...v0.53.0) (2026-11-14)
 
 
