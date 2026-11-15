@@ -6,7 +6,7 @@ trained on; this page says what is in them. How the data is made and laid out is
 [datagen.md](datagen.md), and how it is checked in
 [datagen-runbook.md](datagen-runbook.md).
 
-Original data is in `s3://jwall-engineering-rusty-chess-nnue/data/selfplay/v1/gen=N/run=RUN/`,
+Original data is in `s3://jwall-engineering-braveheart-nnue/data/selfplay/v1/gen=N/run=RUN/`,
 and [other label sets](#label-sets) are under `data/selfplay/relabel/`. Both are
 append-only and kept forever. Every number here comes from the shard manifests
 or from `datagen-audit`, never from the workflow's progress lines.

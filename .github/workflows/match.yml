@@ -133,9 +133,9 @@ jobs:
     name: Play on a dedicated instance
     needs: resolve
     if: inputs.runner == 'remote'
-    uses: jwallace145/jwall-engineering-infra/.github/workflows/remote-task.yml@v0.19.0
+    uses: jwallace145/jwall-engineering-infra/.github/workflows/remote-task.yml@v0.28.0
     with:
-      project: rusty-chess
+      project: braveheart
       script: ci/match-task.sh
       args: ${{ needs.resolve.outputs.args }}
       artifact: match

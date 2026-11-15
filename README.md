@@ -18,9 +18,11 @@ a snarling panther with a woad-blue face, a braid and a tartan scarf.
 Braveheart was called **rusty-chess-v2** through v0.52.0. The research record
 ([docs/research-log.md](docs/research-log.md), [docs/nets.md](docs/nets.md),
 [docs/datasets.md](docs/datasets.md), [CHANGELOG.md](CHANGELOG.md)) keeps the
-old name where it describes what ran, and infrastructure names (S3 buckets,
-the remote-task project, stored data schemas such as `rusty-chess-selfplay/1`)
-keep it too, so existing data and runs stay valid.
+old name where it describes what ran, and stored data schemas such as
+`rusty-chess-selfplay/1` keep it too, so existing data stays readable. The S3
+buckets and the remote-task project carried the old name until November 2026:
+a recorded path under `s3://jwall-engineering-rusty-chess-nnue/` is the same
+key under `s3://jwall-engineering-braveheart-nnue/`.
 
 The full plan is in [docs/roadmap.md](docs/roadmap.md), and the post-mortem of the
 first attempt that shaped it is [docs/lessons-from-rusty-chess-v1.md](docs/lessons-from-rusty-chess-v1.md).

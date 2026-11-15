@@ -57,9 +57,9 @@ jobs:
   timed:
     name: SPRT (timed)
     if: (contains(github.event.pull_request.labels.*.name, 'sprt') || contains(github.event.pull_request.labels.*.name, 'sprt-quick')) && vars.SPRT_RUNNER != 'github'
-    uses: jwallace145/jwall-engineering-infra/.github/workflows/remote-task.yml@v0.19.0
+    uses: jwallace145/jwall-engineering-infra/.github/workflows/remote-task.yml@v0.28.0
     with:
-      project: rusty-chess
+      project: braveheart
       script: ci/strength-task.sh
       args: '["--mode", "timed", "--pr", "${{ github.event.pull_request.head.sha }}", "--base", "${{ github.event.pull_request.base.sha }}", "--quick", "${{ contains(github.event.pull_request.labels.*.name, ''sprt-quick'') && !contains(github.event.pull_request.labels.*.name, ''sprt'') }}"]'
       artifact: sprt-timed
@@ -71,9 +71,9 @@ jobs:
   nodes:
     name: SPRT (fixed nodes)
     if: (contains(github.event.pull_request.labels.*.name, 'sprt') || contains(github.event.pull_request.labels.*.name, 'sprt-quick')) && vars.SPRT_RUNNER != 'github'
-    uses: jwallace145/jwall-engineering-infra/.github/workflows/remote-task.yml@v0.19.0
+    uses: jwallace145/jwall-engineering-infra/.github/workflows/remote-task.yml@v0.28.0
     with:
-      project: rusty-chess
+      project: braveheart
       script: ci/strength-task.sh
       args: '["--mode", "nodes", "--pr", "${{ github.event.pull_request.head.sha }}", "--base", "${{ github.event.pull_request.base.sha }}", "--quick", "${{ contains(github.event.pull_request.labels.*.name, ''sprt-quick'') && !contains(github.event.pull_request.labels.*.name, ''sprt'') }}"]'
       artifact: sprt-nodes

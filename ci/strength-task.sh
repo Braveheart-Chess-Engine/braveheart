@@ -30,7 +30,7 @@ case "$mode" in timed) flag="--timed" ;; nodes) flag="" ;; *) echo "strength-tas
 : "${OUT_DIR:?OUT_DIR is not set}"
 
 FASTCHESS_VERSION=v1.8.2-alpha
-REPO_URL=https://github.com/jwallace145/braveheart
+REPO_URL=https://github.com/Braveheart-Chess/braveheart
 export RUSTFLAGS="-C target-cpu=x86-64-v3" CARGO_TERM_COLOR=never
 work=$(mktemp -d /tmp/strength.XXXXXX)
 t0=$(date +%s)
