@@ -26,6 +26,7 @@ is limited.
 | --- | --- | --- | --- |
 | `logo.png` | 1024×1024 | Transparent | Main logo; works in GitHub's light and dark themes. |
 | `logo-small.png` | 512×512 | Transparent | Simplified mark. |
+| `logo.svg`, `logo-small.svg` | Vector | Transparent | Both marks traced to flat-colour paths, for anywhere that wants an SVG (an IDE project icon, print, large sizes). |
 | `avatar.png` | 1024×1024 | White | Profile pictures (GitHub org or user avatar, other sites); padded so a circular crop keeps the whole head. |
 | `social-preview.png` | 1280×640 | White | GitHub repository social preview (the link card on Slack, X, Discord and so on). |
 | `favicon-32.png`, `favicon-64.png`, `favicon-180.png` | 32, 64, 180 px | Transparent | Favicons and the Apple touch icon, from the small mark. |
@@ -43,6 +44,22 @@ python3 -m venv .venv && .venv/bin/pip install pillow numpy scipy
 ```
 
 The social preview's title uses Arial Bold from macOS.
+
+The SVGs are traced from the same originals by
+[`scripts/make_svg.py`](scripts/make_svg.py). It snaps every pixel to the
+artwork's own flat colours (nine in the big mark, eight in the small one) and
+traces the result with [vtracer](https://github.com/visioncortex/vtracer), so
+the braid's grain in the big mark becomes flat patches. `logo.svg` fills more
+of its square than `logo.png` does: a four-pixel speck below the mark in the
+original stretches the PNG's crop, and the trace drops it. To regenerate:
+
+```sh
+.venv/bin/pip install vtracer
+.venv/bin/python branding/scripts/make_svg.py branding/original branding
+```
+
+Build the venv with Python 3.12 for this: vtracer 0.6.15 crashed under
+Python 3.15.
 
 ## Licence
 
