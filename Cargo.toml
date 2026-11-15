@@ -44,7 +44,7 @@ edition = "2024"
 rust-version = "1.85"
 license = "MIT"
 authors = ["Jimmy Wallace <jimmy.wallace145@gmail.com>"]
-repository = "https://github.com/jwallace145/braveheart"
+repository = "https://github.com/Braveheart-Chess/braveheart"
 publish = false
 
 [workspace.lints.rust]

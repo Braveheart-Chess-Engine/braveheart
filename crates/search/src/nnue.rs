@@ -77,7 +77,7 @@ pub const NETS: [EmbeddedNet; 1] = [EmbeddedNet {
 
 /// Where every trained net is kept, forever: `<NET_STORE>/<id>/net.nnue`,
 /// beside its `training.json`.
-pub const NET_STORE: &str = "s3://jwall-engineering-rusty-chess-nnue/data/nets";
+pub const NET_STORE: &str = "s3://jwall-engineering-braveheart-nnue/data/nets";
 
 /// A net that played an earlier generation and is no longer embedded. Its
 /// file is in [`NET_STORE`], byte for byte the file with this SHA-256, and

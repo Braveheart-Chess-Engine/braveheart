@@ -3,16 +3,16 @@
 # state, CI roles) is derived by the tool. Fields and behaviour:
 # https://github.com/jwallace145/jwall-engineering-infra/blob/main/docs/lichess-bot.md
 version: 1
-project: rusty-chess
-repository: jwallace145/braveheart
+project: braveheart
+repository: Braveheart-Chess/braveheart
 
 # The six tags every resource carries (through the provider's default_tags).
 # Project, Repository, Environment=prod and ManagedBy=terraform are cross-checked.
 tags:
   Organization: jwall-engineering
-  Project: rusty-chess
+  Project: braveheart
   Environment: prod
-  Repository: jwallace145/braveheart
+  Repository: Braveheart-Chess/braveheart
   ManagedBy: terraform
   Owner: jwallace145
 
@@ -38,12 +38,12 @@ components:
     config: lichess/config.yml      # lichess-bot config with LICHESS_TOKEN_PLACEHOLDER
     lichess_user: rusty-chess-bot   # optional: for the profile URL in `bot status`
     secrets:
-      LICHESS_TOKEN: /jwall-engineering/rusty-chess/lichess-token
+      LICHESS_TOKEN: /jwall-engineering/braveheart/lichess-token
     engine:
       hash_mb: 256                  # UCI Hash; c8a.medium has 2 GiB
       move_overhead_ms: 500         # UCI Move Overhead (lichess-bot's own move_overhead stays in config.yml)
     records:
-      s3: true                      # sync game_records/ to s3://jwall-engineering-rusty-chess-records/records/
+      s3: true                      # sync game_records/ to s3://jwall-engineering-braveheart-records/records/
     logs:
       retention_days: 30
 
@@ -127,6 +127,6 @@ components:
   # https://github.com/jwallace145/jwall-engineering-infra/blob/main/docs/datasets.md
   - kind: dataset
     name: nnue
-    bucket: jwall-engineering-rusty-chess-nnue  # <Organization>-<project>-<name>
+    bucket: jwall-engineering-braveheart-nnue  # <Organization>-<project>-<name>
     prefix: data/                   # everything the project writes lives under it
     writers: [task-runner]          # the task instances: PutObject under the prefix only

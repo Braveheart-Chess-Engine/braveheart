@@ -41,7 +41,7 @@ cand_label=${cand_label:-${candidate:0:7}}
 base_label=${base_label:-${baseline:0:7}}
 
 FASTCHESS_VERSION=v1.8.2-alpha
-REPO_URL=https://github.com/jwallace145/braveheart
+REPO_URL=https://github.com/Braveheart-Chess/braveheart
 OPENINGS=tests/openings/openings.epd
 export RUSTFLAGS="-C target-cpu=x86-64-v3" CARGO_TERM_COLOR=never
 work=$(mktemp -d /tmp/match.XXXXXX)
