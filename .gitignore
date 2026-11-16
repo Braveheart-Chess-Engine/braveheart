@@ -9,10 +9,7 @@ node_modules/
 .idea/
 .vscode/
 
-# Lichess bot: the lichess-bot checkout, its virtualenv, PGNs and the token-bearing config
-lichess/.lichess-bot/
-
-# Local secrets (e.g. LICHESS_TOKEN); never committed
+# Local secrets; never committed
 secrets.sh
 /trainer/target
 

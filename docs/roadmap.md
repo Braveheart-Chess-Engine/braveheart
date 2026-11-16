@@ -142,7 +142,7 @@ The standard techniques the engine still lacked, each worth 10–40 Elo and all 
 
 - [x] A rating ladder against limited Stockfish on every release, attached with the logs and PGNs, as a ballpark between public ratings: the `Rating` workflow runs on every published release and writes the Strength section of its notes. Rungs 2800/2950/3100/3190 against Stockfish 19 since v0.28.0's first net (2500/2650/2800/2950 from #102, 2200/2500/2800/3100 before, 1500/1800/2100/2400 through v0.13.0; Ubuntu's Stockfish package, 17.1 last, until then). Still open: the ladder on a dedicated instance with about 400 games a rung (±19 instead of ±35–40)
 - [ ] Homebrew tap bumped by the `release` job after the Release Please PR merges (release notes already carry the signature and telemetry since Phase 0)
-- [x] Lichess bot account: `lichess/run.sh` connects the engine through lichess-bot for development (see `lichess/README.md`), and an always-on `c8a.medium` run by jwall-engineering-infra plays every published release automatically (#74). The rating it earns is the real-world number; it is not comparable to the ladder's or CCRL's. Since 2026-11-15 the script and its README live in [braveheart-lichess-bot](https://github.com/Braveheart-Chess/braveheart-lichess-bot), the bot's own repository; `lichess/config.yml` stays here until the deployment moves there too
+- [x] Lichess bot account: `lichess/run.sh` connects the engine through lichess-bot for development (see `lichess/README.md`), and an always-on `c8a.medium` run by jwall-engineering-infra plays every published release automatically (#74). The rating it earns is the real-world number; it is not comparable to the ladder's or CCRL's. Since 2026-11-15 the bot, its config and its deployment live in [braveheart-lichess-bot](https://github.com/Braveheart-Chess/braveheart-lichess-bot), the bot's own repository, which pins the engine release it plays (v0.54.0 at the move); engine releases no longer deploy it
 - [x] The bot's openings: Lichess's opening explorer (masters games, the best-scoring move played at least 50 times) through lichess-bot, never the engine (#86, v0.19.0); pondering on the opponent's clock (#108, v0.25.0)
 - [ ] Opening book as a release asset: a from-scratch Polyglot book builder in `crates/tools` from a master-games collection (data credited like PeSTO), published as `braveheart-book.bin` beside the binaries; the Lichess bot plays it through lichess-bot's polyglot setting with weighted random selection. The engine itself stays book-free: SPRT, the ladder and CCRL testers all play from their own openings. **Decided 2026-10-28:** no `OwnBook` in the binary; a book built from the engine's own games replaces the master-games book after Phase 6
 - [ ] Release matrix for CCRL testers: a Windows x86-64 build and a baseline x86-64 build beside the x86-64-v3 one, named by CPU level
@@ -225,10 +225,9 @@ braveheart/
   trainer/     # bullet trainer (CUDA or Metal); its own workspace, never in the engine's build
   ci/          # task scripts for the dedicated instances: strength (SPRT), match, datagen, train, gpu-smoke
   tests/       # perft EPD suite, UCI smoke tests, self-play, eval symmetry, openings
-  lichess/     # the deployed bot's lichess-bot config; the bot is Braveheart-Chess/braveheart-lichess-bot
   docs/        # roadmap, nnue, training, datagen, datagen runbook, benchmarks, post-mortem
   .github/workflows/  # ci, bench, sprt, match, rating, datagen, train, gpu-smoke,
-                      # release-please, release-bench, release-to-lichess
+                      # release-please, release-bench
 ```
 
 The workspace root is itself a package because Release Please's `rust` strategy runs its package updater on the root `Cargo.toml` after bumping every member, and fails on a virtual workspace. Members are listed explicitly with their own `version`; `release-type: simple` with an annotated version would leave `Cargo.lock` stale and break `--locked` builds.
@@ -240,7 +239,7 @@ The workspace root is itself a package because Release Please's `rust` strategy 
 | cargo-show-asm | Inspect codegen of hot loops |
 | fastchess | SPRT, matches and the rating ladder |
 | bullet | NNUE training (pinned commit), CUDA or Metal |
-| jwall-engineering-infra | Dedicated CPU and GPU task instances, the dataset bucket, the Lichess bot |
+| jwall-engineering-infra | Dedicated CPU and GPU task instances, the dataset bucket (the Lichess bot is deployed from braveheart-lichess-bot) |
 | cargo-llvm-cov | Coverage, mainly for core |
 | Release Please | Versioning and changelog |
 

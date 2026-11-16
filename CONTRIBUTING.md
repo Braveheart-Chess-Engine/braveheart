@@ -170,7 +170,7 @@ Release Please opens and maintains a release PR as changes land on `main`. Mergi
 
 Merging the release PR is the human gate for every published build.
 
-If a merged release PR has no tag and no GitHub release (GitHub occasionally drops a push event, so no workflow runs on the merge commit), run the `Release` workflow by hand from `main`: `gh workflow run release-please.yml --ref main`. Release Please tags any merged release PR still labelled `autorelease: pending`, and the binaries, telemetry, rating and Lichess workflows follow from the published release as usual.
+If a merged release PR has no tag and no GitHub release (GitHub occasionally drops a push event, so no workflow runs on the merge commit), run the `Release` workflow by hand from `main`: `gh workflow run release-please.yml --ref main`. Release Please tags any merged release PR still labelled `autorelease: pending`, and the binaries, telemetry and rating workflows follow from the published release as usual. Releases deploy nothing to the Lichess bot: [braveheart-lichess-bot](https://github.com/Braveheart-Chess/braveheart-lichess-bot) pins the release it plays.
 
 ### Benchmark history
 
