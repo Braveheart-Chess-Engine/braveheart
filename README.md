@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="branding/logo.png" alt="Braveheart logo" width="280"><br>
-  <sub>Logo © the artist, used under licence. All rights reserved; not covered by the MIT licence (<a href="branding/LICENSE.md">details</a>).</sub>
+  <img src="https://raw.githubusercontent.com/Braveheart-Chess/braveheart-branding/main/logo.png" alt="Braveheart logo" width="280"><br>
+  <sub>Logo © the artist, used under licence. All rights reserved; not part of this repository or its MIT licence (<a href="https://github.com/Braveheart-Chess/braveheart-branding#licence">details</a>).</sub>
 </p>
 
 # Braveheart
@@ -42,7 +42,6 @@ contributors in [CONTRIBUTING.md](CONTRIBUTING.md) and for coding agents in
 | `trainer` | Trains NNUE nets with bullet (CUDA or Metal); a separate Cargo project so the engine never needs a GPU toolkit ([docs/training.md](docs/training.md)). |
 | `tests/` | UCI smoke tests, the perft suite `perft.epd`, mate-in-N positions. |
 | `perf-targets.toml` | The performance bars `perf-gate` enforces; they only go up. |
-| `branding/` | The project logo, its derived avatar, favicon and social preview images, and the script that makes them ([branding/README.md](branding/README.md)). |
 | `benches/` | Criterion microbenchmarks for the binary; crates keep their own under `crates/*/benches`. |
 
 ## Building and running
@@ -97,7 +96,8 @@ with Stockfish and Viridithas as opponents, for viewing rather than measuring.
 
 To play it or watch it on Lichess, see
 [braveheart-lichess-bot](https://github.com/Braveheart-Chess/braveheart-lichess-bot),
-the bot's own repository.
+the bot's own repository. The logo, the avatar, the favicons and the social
+preview live in [braveheart-branding](https://github.com/Braveheart-Chess/braveheart-branding).
 
 ## Phases
 
@@ -116,7 +116,9 @@ the bot's own repository.
 
 The code is MIT licensed; see [LICENSE](LICENSE).
 
-The logo and every other file in [`branding/`](branding/) are **excluded** from
-the MIT licence. The artwork is copyright © the artist, used by this project
-under licence, with all rights reserved. Forks and redistributions must remove
-it. See [branding/LICENSE.md](branding/LICENSE.md).
+The logo is not part of this repository and is **not** covered by the MIT
+licence. The artwork is copyright © the artist, used by this project under
+licence, with all rights reserved; it lives in
+[braveheart-branding](https://github.com/Braveheart-Chess/braveheart-branding),
+whose [LICENSE](https://github.com/Braveheart-Chess/braveheart-branding/blob/main/LICENSE)
+has the terms. Forks and redistributions must not use it.
