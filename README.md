@@ -1,6 +1,9 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Braveheart-Chess/braveheart-branding/main/logo.png" alt="Braveheart logo" width="280"><br>
-  <sub>Logo © the artist, used under licence. All rights reserved; not part of this repository or its MIT licence (<a href="https://github.com/Braveheart-Chess/braveheart-branding#licence">details</a>).</sub>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Braveheart-Chess/braveheart-branding/main/banner-dark.png">
+    <img src="https://raw.githubusercontent.com/Braveheart-Chess/braveheart-branding/main/banner-light.png" alt="Braveheart" width="640">
+  </picture><br>
+  <sub>Logo © the artist, used under licence. All rights reserved; not covered by this repository's licence (<a href="https://github.com/Braveheart-Chess/braveheart-branding#licence">details</a>).</sub>
 </p>
 
 # Braveheart
