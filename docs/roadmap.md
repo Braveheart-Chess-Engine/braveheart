@@ -9,7 +9,7 @@ A living checklist. Started Oct 26, 2026 · @Jimmy, maintained as the engine is 
 - Every item is a checkbox. Check it when the PR that delivers it merges, and write the PR number and the measured number next to it. Numbers are the point: "done" without a number is not done.
 - Exit gates are checklist items too. A phase is complete when every gate item is checked. The next phase does not start before that.
 - New learnings go under [Learnings](#learnings) with a date. New phases are appended; nothing is deleted, only checked or struck through with a reason.
-- Everything is measured on standardized hardware, never on someone's laptop: benchmarks on every PR and release on `ubuntu-latest` runners; SPRT, matches and data generation on dedicated, ephemeral 64-core `c8a.16xlarge` instances (jwall-engineering-infra's remote tasks); NNUE training on a dedicated GPU instance (`g6.xlarge`, NVIDIA L4). Local numbers are for development only.
+- Everything is measured on standardized hardware, never on someone's laptop: benchmarks on every PR and release on `ubuntu-latest` runners; SPRT, matches and data generation on dedicated, ephemeral 64-core `c8a.16xlarge` instances (jaws's remote tasks); NNUE training on a dedicated GPU instance (`g6.xlarge`, NVIDIA L4). Local numbers are for development only.
 
 ## Goals and principles
 
@@ -133,7 +133,7 @@ The standard techniques the engine still lacked, each worth 10–40 Elo and all 
 - [x] **Exit:** the list exhausted, each item kept on H1 or dropped on record (the improving heuristic). Together the kept items cut time to depth by more than half (futility −10.9%, IIR −18.2%, SEE pruning −19.9%; singular extensions and history LMR spend some back on deeper lines) and the timed SPRTs summed to about +100 Elo; a 10+0.1 match of v0.22.0 against v0.20.0 measured **+33.8** (99% interval +20.4 to +47.3) for IIR and SEE pruning alone, and v0.23.0 against v0.22.0 **+27.2** (+14.4 to +40.0) for singular extensions. The ladder reads about 2700–2750, not the 2800 hoped for. **Decided 2026-10-30:** go to Phase 6 anyway: the remaining strength is in the evaluation, and the ladder at 100 games a rung (±35–40) cannot resolve 15–25 Elo steps, while matches can
 - [x] Testing infrastructure built during Phase 4b, all on the standardized hardware:
   - Timed and fixed-node SPRTs together, the timed one the gate (#84); a configurable `Match` workflow between any two refs (#83)
-  - SPRT legs on dedicated 64-core spot instances through jwall-engineering-infra's remote tasks: a dual SPRT in 7 minutes instead of over 2 hours, about 14× (timed) and 20× (fixed nodes) the games per minute (#91)
+  - SPRT legs on dedicated 64-core spot instances through jaws's remote tasks: a dual SPRT in 7 minutes instead of over 2 hours, about 14× (timed) and 20× (fixed nodes) the games per minute (#91)
   - SPRT bounds [0, 5] with at most 5000 pairs, after two PRs ran out of games at [0, 10] (#96); the timed leg on demand after two spot interruptions left gates without a verdict (#105)
   - `Match` on a dedicated instance, with a pentanomial interval at 95, 99 or 99.9% and the games a conclusive answer would take (#97): 2000 games at 10+0.1 in about 20 minutes
   - Ladder rungs moved to 2500/2650/2800/2950 when 2200 saturated at 92–96%, with v0.18.0–v0.23.0 re-rated on them (#102)
@@ -155,7 +155,7 @@ The destination named in the goals: our own network, trained on our own games. *
 
 **Data**
 
-- [x] `datagen`: self-play at fixed nodes with the engine's own search, from openings of 8 or 10 random plies, writing (position, score, result) records with full game records and manifests; spec [datagen.md](datagen.md), settings `datagen.toml` (#103). The `Datagen` workflow plays on up to three dedicated 64-core spot instances, about 100M positions an instance-hour, and uploads each shard as it completes to an append-only, kept-forever dataset bucket declared in `jwall-engineering-sites.yaml` (#103, #107, #110); a re-run gets its own partition and seeds, runs are capped at 300 minutes (#106)
+- [x] `datagen`: self-play at fixed nodes with the engine's own search, from openings of 8 or 10 random plies, writing (position, score, result) records with full game records and manifests; spec [datagen.md](datagen.md), settings `datagen.toml` (#103). The `Datagen` workflow plays on up to three dedicated 64-core spot instances, about 100M positions an instance-hour, and uploads each shard as it completes to an append-only, kept-forever dataset bucket declared in `jaws.yaml` (#103, #107, #110); a re-run gets its own partition and seeds, runs are capped at 300 minutes (#106)
 - [x] `datagen-audit` and [datagen-runbook.md](datagen-runbook.md): every record checked against its replayed game, every result against its final position, every record through bullet's parser, checksums, counts and seeds (P0, must be zero), quality bars (P1); the deep checks (adjudication, repetition, scores against outcomes, openings). Generation-1 settings tuned from generation 0's measurements: win adjudication 1200 cp (99.98% right in 5000), opening limit 250 cp, even random plies; spot interruptions lose only the games in progress (#113)
 - [x] **Generation 0:** 231,240,344 positions from 2,387,961 games in 9,329 shards (4.0 GB), engine `v0.25.0`/`3e3bdbd` with PeSTO at 5000 nodes, three runs on 2026-10-30. **Audited in full:** zero failures over every record and every game, 0 of 231M parse failures in bulletformat; draw rate 34–35%, 39% of scores within ±100 cp, 46% endgame positions, about 2% duplicates
 
@@ -163,7 +163,7 @@ The destination named in the goals: our own network, trained on our own games. *
 
 - [x] The trainer: `trainer/`, a separate Cargo project on `bullet` (CUDA or Apple Metal) so the engine never needs a GPU toolkit. `prepare` splits by whole worker (no game spans the split) and shuffles with a recorded seed, byte-reproducibly; `train` builds bullet's reference (768 → 128) × 2 → 1 SCReLU network at the engine's quantization and scale (400, enforced). `ci/train-task.sh` downloads, prepares, trains, checks and uploads with a full `training.json` ([training.md](training.md), #115)
 - [x] The engine-to-trainer check, `nnue-eval`: an independent implementation reproduced the trainer's float evaluation exactly and the engine's quantized evaluation exactly (75 of 75), so the gap is quantization alone (mean 9 cp, worst 28); a perspective bug reads 740 (#115)
-- [x] GPU training tasks: jwall-engineering-infra's `gpu` profile (one on-demand `g6.xlarge`, NVIDIA L4; G and VT quota 5 vCPUs, spot 0) (#116), the `GPU smoke` acceptance test and the `Train` workflow (#117); bullet's CUDA build needs `CUDA_PATH` (#119); held-out loss every 4 superbatches (#121); several generations in one net (#128)
+- [x] GPU training tasks: jaws's `gpu` profile (one on-demand `g6.xlarge`, NVIDIA L4; G and VT quota 5 vCPUs, spot 0) (#116), the `GPU smoke` acceptance test and the `Train` workflow (#117); bullet's CUDA build needs `CUDA_PATH` (#119); held-out loss every 4 superbatches (#121); several generations in one net (#128)
 - [x] **Net 1:** 40 superbatches (4.0B positions) at λ 0.5 on generation 0, 3.2 minutes of training on an L4; engine check mean 8.7 cp; held-out 0.018925 against 0.018898 on training data, no overfitting. Every net's data, parameters and results: [nets.md](nets.md); every dataset: [datasets.md](datasets.md)
 
 **Engine**
@@ -239,7 +239,7 @@ The workspace root is itself a package because Release Please's `rust` strategy 
 | cargo-show-asm | Inspect codegen of hot loops |
 | fastchess | SPRT, matches and the rating ladder |
 | bullet | NNUE training (pinned commit), CUDA or Metal |
-| jwall-engineering-infra | Dedicated CPU and GPU task instances, the dataset bucket (the Lichess bot is deployed from braveheart-lichess-bot) |
+| jaws | Dedicated CPU and GPU task instances, the dataset bucket (the Lichess bot is deployed from braveheart-lichess-bot) |
 | cargo-llvm-cov | Coverage, mainly for core |
 | Release Please | Versioning and changelog |
 

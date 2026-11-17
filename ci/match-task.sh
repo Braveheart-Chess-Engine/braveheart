@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # A head-to-head match between any two commits, run by the Match workflow on a
-# dedicated instance through jwall-engineering-infra's remote-task workflow
+# dedicated instance through jaws's remote-task workflow
 # (or on a GitHub-hosted runner as the fallback). It starts in the repository
 # root at the workflow's commit, with OUT_DIR set; everything written there
 # comes back as the job's artifact.

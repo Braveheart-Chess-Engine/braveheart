@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# One leg of the SPRT on a dedicated instance, run by jwall-engineering-infra's
+# One leg of the SPRT on a dedicated instance, run by jaws's
 # remote-task workflow (docs/remote-tasks.md there). It starts in the
 # repository root at the PR's head commit, with OUT_DIR set; everything written
 # to OUT_DIR comes back as the job's artifact, also when the script fails or

@@ -136,7 +136,7 @@ screen -S datagen ci/datagen-manager.py run --generation 6 --target-positions 60
 ```
 
 The AWS sign-in is the owner's Identity Center session
-([owner access](https://github.com/jwallace145/jwall-engineering-infra/blob/main/docs/owner-access.md)),
+([owner access](https://github.com/jwallace145/jaws/blob/main/docs/owner-access.md)),
 which lasts 12 hours. A run that outlasts it gets failed S3 reads until you run
 `aws sso login --profile jwall-admin` again; the manager calls the AWS CLI on
 every poll, so it picks up the new sign-in without a restart.
@@ -459,7 +459,7 @@ guessed. `bullet` trains on `target = (1 − λ) · sigmoid(score / 400) + λ ·
 
 | Symptom | Likely cause | Action |
 |:--|:--|:--|
-| Plan job fails: no dataset component | `jwall-engineering-sites.yaml` lacks the `dataset` component | add it (see [datagen.md](datagen.md)) |
+| Plan job fails: no dataset component | `jaws.yaml` lacks the `dataset` component | add it (see [datagen.md](datagen.md)) |
 | Plan job fails: minutes | over 300: the 6-hour runner limit also covers slot waits, boot, build and upload | at most 300 |
 | A Generate job waits, then fails | no task slot: SPRT, Match or other datagen instances fill the 192 vCPUs | wait, or run fewer instances |
 | Interrupted | spot reclamation | start another run; the data is valid |

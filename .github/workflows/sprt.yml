@@ -20,9 +20,9 @@ name: SPRT
 #
 # Where: by default each leg runs on its own dedicated 64-core c8a.16xlarge
 # instance, launched for the job and terminated after it, through
-# jwall-engineering-infra's remote-task workflow (its docs/remote-tasks.md).
+# jaws's remote-task workflow (its docs/remote-tasks.md).
 # The leg's work is ci/strength-task.sh, at the PR's head commit; it plays
-# 60 games at once. The `sprt` profile in jwall-engineering-sites.yaml says what
+# 60 games at once. The `sprt` profile in jaws.yaml says what
 # the instances are: on demand, since both legs gate and a spot reclamation
 # leaves no verdict. Setting the repository variable SPRT_RUNNER to `github`
 # switches back to the GitHub-hosted runners (4 games at once), the fallback
@@ -57,7 +57,7 @@ jobs:
   timed:
     name: SPRT (timed)
     if: (contains(github.event.pull_request.labels.*.name, 'sprt') || contains(github.event.pull_request.labels.*.name, 'sprt-quick')) && vars.SPRT_RUNNER != 'github'
-    uses: jwallace145/jaws/.github/workflows/remote-task.yml@v0.28.0
+    uses: jwallace145/jaws/.github/workflows/remote-task.yml@v0.50.1
     with:
       project: braveheart
       script: ci/strength-task.sh
@@ -71,7 +71,7 @@ jobs:
   nodes:
     name: SPRT (fixed nodes)
     if: (contains(github.event.pull_request.labels.*.name, 'sprt') || contains(github.event.pull_request.labels.*.name, 'sprt-quick')) && vars.SPRT_RUNNER != 'github'
-    uses: jwallace145/jaws/.github/workflows/remote-task.yml@v0.28.0
+    uses: jwallace145/jaws/.github/workflows/remote-task.yml@v0.50.1
     with:
       project: braveheart
       script: ci/strength-task.sh

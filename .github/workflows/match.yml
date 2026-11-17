@@ -8,7 +8,7 @@ name: Match
 # conclusive answer would take when this one is not.
 #
 # Where: by default on a dedicated 64-core c8a.16xlarge spot instance,
-# launched for the run and terminated after it, through jwall-engineering-infra's
+# launched for the run and terminated after it, through jaws's
 # remote-task workflow (its docs/remote-tasks.md), playing 60 games at once.
 # The work is ci/match-task.sh. `runner: github` plays on a GitHub-hosted
 # runner instead, `concurrency` games at once. Run it from `main`: the task
@@ -133,7 +133,7 @@ jobs:
     name: Play on a dedicated instance
     needs: resolve
     if: inputs.runner == 'remote'
-    uses: jwallace145/jaws/.github/workflows/remote-task.yml@v0.28.0
+    uses: jwallace145/jaws/.github/workflows/remote-task.yml@v0.50.1
     with:
       project: braveheart
       script: ci/match-task.sh

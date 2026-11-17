@@ -1,6 +1,6 @@
 name: Train
 
-# Train NNUE nets on a GPU task (jwall-engineering-infra's remote-task, profile
+# Train NNUE nets on a GPU task (jaws's remote-task, profile
 # gpu: one on-demand g6.xlarge with an NVIDIA L4). Each net runs
 # ci/train-task.sh: download the dataset's positions, prepare (split by
 # worker, seeded shuffle), train with bullet, check the engine's evaluation
@@ -86,9 +86,9 @@ jobs:
           [[ "$SUPERBATCHES" =~ ^[0-9]+$ ]] && [ "$SUPERBATCHES" -ge 1 ] && [ "$SUPERBATCHES" -le 200 ] || { echo "::error::superbatches must be 1..200"; exit 1; }
           [[ "$HIDDEN" =~ ^[0-9]+$ ]] && [ "$HIDDEN" -ge 16 ] && [ "$HIDDEN" -le 1024 ] && [ $((HIDDEN % 16)) = 0 ] || { echo "::error::hidden must be a multiple of 16 from 16 to 1024"; exit 1; }
           [[ "$GENERATIONS" =~ ^[0-9]+(,[0-9]+)*$ ]] || { echo "::error::generations must be whole numbers separated by commas, e.g. 0,1"; exit 1; }
-          bucket=$(yq -r '[.components[] | select(.kind == "dataset")][0].bucket // ""' jwall-engineering-sites.yaml)
-          prefix=$(yq -r '[.components[] | select(.kind == "dataset")][0].prefix // ""' jwall-engineering-sites.yaml)
-          [ -n "$bucket" ] && [ -n "$prefix" ] || { echo "::error::no dataset component in jwall-engineering-sites.yaml"; exit 1; }
+          bucket=$(yq -r '[.components[] | select(.kind == "dataset")][0].bucket // ""' jaws.yaml)
+          prefix=$(yq -r '[.components[] | select(.kind == "dataset")][0].prefix // ""' jaws.yaml)
+          [ -n "$bucket" ] && [ -n "$prefix" ] || { echo "::error::no dataset component in jaws.yaml"; exit 1; }
           # One --dataset per generation, as a JSON array of arguments.
           datasets=$(echo "$GENERATIONS" | tr ',' '\n' | sort -nu \
             | jq -R --arg base "s3://$bucket/${prefix%/}/selfplay/v1" '["--dataset", "\($base)/gen=\(.)/"]' | jq -sc 'add')
@@ -124,7 +124,7 @@ jobs:
       max-parallel: 1 # the G and VT on-demand quota (5 vCPUs) fits one g6.xlarge
       matrix:
         include: ${{ fromJSON(needs.plan.outputs.nets) }}
-    uses: jwallace145/jaws/.github/workflows/remote-task.yml@v0.28.0
+    uses: jwallace145/jaws/.github/workflows/remote-task.yml@v0.50.1
     with:
       project: braveheart
       profile: gpu
