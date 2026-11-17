@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # The GPU profile's acceptance test, run by the `GPU smoke` workflow on one
-# fresh g6.xlarge (jwall-engineering-infra's remote-task, profile gpu): the
+# fresh g6.xlarge (jaws's remote-task, profile gpu): the
 # GPU and CUDA work, bullet's CUDA backend builds our trainer, and the
 # dataset grants hold in both directions. A few minutes, well under a dollar.
 # Starts in the repository root at the workflow's commit, with OUT_DIR and
