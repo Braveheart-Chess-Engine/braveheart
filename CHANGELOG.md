@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.55.0](https://github.com/Braveheart-Chess/braveheart/compare/v0.54.0...v0.55.0) (2026-11-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* move self-play and training to braveheart-selfplay and braveheart-trainer ([#277](https://github.com/Braveheart-Chess/braveheart/issues/277))
+
+### Documentation
+
+* open the readme with the organisation banner ([#274](https://github.com/Braveheart-Chess/braveheart/issues/274)) ([1afe6d9](https://github.com/Braveheart-Chess/braveheart/commit/1afe6d9cf317292de87fd0ee4fb7e8450d015ac4))
+* record the task-runner checks after the bucket move ([#268](https://github.com/Braveheart-Chess/braveheart/issues/268)) ([464a58c](https://github.com/Braveheart-Chess/braveheart/commit/464a58ce09e3eeb138d7d04d346cf43711b3a14e))
+* sign in with the jwall-admin Identity Center profile for the datagen and relabel managers ([#272](https://github.com/Braveheart-Chess/braveheart/issues/272)) ([7453ca9](https://github.com/Braveheart-Chess/braveheart/commit/7453ca9625ac9c938c3b22fe6536d73e2b8819e2))
+
+
+### Code Refactoring
+
+* move self-play and training to braveheart-selfplay and braveheart-trainer ([#277](https://github.com/Braveheart-Chess/braveheart/issues/277)) ([5d4b8e7](https://github.com/Braveheart-Chess/braveheart/commit/5d4b8e7b9182d87796995c12ec40083041a2a1b1))
+
 ## [0.54.0](https://github.com/Braveheart-Chess/braveheart/compare/v0.53.0...v0.54.0) (2026-11-15)
 
 
