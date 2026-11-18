@@ -18,6 +18,12 @@
 
 * move self-play and training to braveheart-selfplay and braveheart-trainer ([#277](https://github.com/Braveheart-Chess/braveheart/issues/277)) ([5d4b8e7](https://github.com/Braveheart-Chess/braveheart/commit/5d4b8e7b9182d87796995c12ec40083041a2a1b1))
 
+### Benchmarks
+
+* bench signature 919,304, instructions per node 4016, search 1.51M NPS, perft 199.92M NPS (pass (63)), fail-high first 87.8%, EBF 1.86, TT hit 55.7%
+* since v0.54.0: fail-high first +0.0 pt, EBF +0.00, instructions per node −0.0%, search NPS +0.0%
+* full history: [docs/benchmarks.md](docs/benchmarks.md)
+
 ## [0.54.0](https://github.com/Braveheart-Chess/braveheart/compare/v0.53.0...v0.54.0) (2026-11-15)
 
 
