@@ -427,7 +427,8 @@ fn the_binary_carries_only_the_default_net_and_names_the_retired_ones() {
 #[test]
 fn every_embedded_net_loads_and_judges_material() {
     // A sanity check on the trained nets themselves; their accuracy against
-    // the trainer is `nnue-eval --check`'s job (docs/training.md).
+    // the trainer is `nnue-eval --check`'s job (braveheart-trainer's
+    // docs/training.md).
     for embedded in &NETS {
         material_sanity(&network_by_id(embedded.id).unwrap());
     }

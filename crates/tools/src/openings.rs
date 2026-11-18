@@ -42,7 +42,8 @@ impl Default for Settings {
 }
 
 /// A small, fast, seeded xorshift generator: reproducible streams for
-/// openings and self-play, no dependency.
+/// openings, no dependency. braveheart-selfplay keeps a verbatim copy, whose
+/// sequence its self-play shards' seeds depend on.
 pub struct Rng(u64);
 
 impl Rng {

@@ -3,8 +3,12 @@
 The engine evaluates with an efficiently updatable neural network, trained
 on its own self-play games, instead of the hand-written PeSTO tables. The net
 is embedded in the binary, so an install is still one file; PeSTO stays
-available for comparisons. The data the nets are trained on is described in
-[datagen.md](datagen.md), and the training in [training.md](training.md).
+available for comparisons. The file format below is the contract every
+trained net meets. The data the nets are
+trained on is made in [braveheart-selfplay](https://github.com/Braveheart-Chess/braveheart-selfplay) and
+described in its [datagen.md](https://github.com/Braveheart-Chess/braveheart-selfplay/blob/main/docs/datagen.md);
+the nets are trained in [braveheart-trainer](https://github.com/Braveheart-Chess/braveheart-trainer),
+described in its [training.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/training.md).
 
 ## Architecture
 
@@ -26,8 +30,8 @@ available for comparisons. The data the nets are trained on is described in
   concatenated into one weighted sum and scaled to centipawns.
 
 A diagram of this network for every net trained so far, generated from a
-manifest of each net's topology, is in
-[nnue-architectures/](nnue-architectures/README.md).
+manifest of each net's topology, is in braveheart-trainer's
+[nnue-architectures/](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nnue-architectures/README.md).
 
 ## Quantization
 
@@ -217,7 +221,7 @@ the bias plus about 25 columns against 2–4.
 **What it means for making 768 affordable.** The CI bench found net7rl012w768
 13.9% ± 6.9% slower a node and 20.9% ± 9.4% longer to depth, and its SPRT
 gained +28.9 ± 10.2 at fixed nodes but lost −9.0 ± 6.4 timed
-([nets.md](nets.md#net7rl012w768-l050-r42411319602)). The three NNUE terms are
+([nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md#net7rl012w768-l050-r42411319602)). The three NNUE terms are
 the only ones that grew. In order of what each could give back, per node at 768:
 
 1. **Rebuilds, 59 ns.** 8.4% of pushes rebuild a perspective because the
@@ -314,9 +318,12 @@ carried one net per generation; with the king-bucketed nets at 3.2 MB each,
 that was 8.3 MB of a 9.2 MB binary at net7 (#180), and only the default is ever used in play.
 
 Every earlier generation's net is **retired**: listed in `nnue::RETIRED_NETS`
-with its id, generation and the SHA-256 of its file, and kept forever in the
-dataset bucket as `data/nets/<net id>/net.nnue` beside its `training.json`
-(`nnue::NET_STORE`).
+with its id, generation and the SHA-256 of its file, and kept forever in
+braveheart-trainer's bucket as `data/nets/<net id>/net.nnue` beside its
+`training.json` (`nnue::NET_STORE`,
+`s3://jwall-engineering-braveheart-trainer-nets/data/nets`). The nets were
+copied there key for key at the split; until then `NET_STORE` named the same
+keys in `jwall-engineering-braveheart-nnue`.
 
 | Net | Played generation | Trained on | Bench signature | |
 |:--|--:|:--|--:|:--|
@@ -332,17 +339,19 @@ dataset bucket as `data/nets/<net id>/net.nnue` beside its `training.json`
   (`setoption name EvalFile value <file>`, `bench --eval-file <file>`), and
   check its SHA-256 against the table. Asking for a retired net by id says
   exactly that, with the URL and the hash.
-- **Re-searching a generation's data** (the audit's determinism step) needs
-  the net that played it, and gets it by building the tool at the data's
-  engine commit ([datagen-runbook.md](datagen-runbook.md)): that build embeds
-  the net of its time.
+- **Re-searching a generation's data** (the audit's determinism step, in
+  braveheart-selfplay) needs the net that played it, and gets it by building
+  the audit against the data's engine commit
+  ([datagen-runbook.md](https://github.com/Braveheart-Chess/braveheart-selfplay/blob/main/docs/datagen-runbook.md)):
+  that build embeds the net of its time.
 - **A new default** replaces the `NETS` entry, and the net it replaces moves
   to `RETIRED_NETS` if it played a generation. A net replaced before playing
   any generation (net 2, net 3, net 4, net5b8, net6, net7, net8) is in neither: it never
   played data, and its file stays in the bucket. The swap changes the bench
   signature, and is kept only on a timed SPRT win over the net it replaces.
 - Each net's full history (data, parameters, validation curve, SPRT and
-  ladder results) is in [nets.md](nets.md).
+  ladder results) is in braveheart-trainer's
+  [nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md).
 
 ## Choosing the evaluation
 
@@ -357,7 +366,8 @@ dataset bucket as `data/nets/<net id>/net.nnue` beside its `training.json`
 - **Bench:** `braveheart bench` uses the default net, and its signature is
   the net's. `--eval-file` takes a file, an embedded net's id or `pesto`.
   PeSTO's signature is unchanged since `v0.24.0` (1697503).
-- **Self-play:** `datagen.toml`'s `generation` picks the player:
+- **Self-play** (braveheart-selfplay, built against a pinned engine release):
+  its `datagen.toml`'s `generation` picks the player:
   - generation 0 is PeSTO;
   - generation N is the embedded net that plays it;
   - `datagen` refuses any other generation;
@@ -371,7 +381,7 @@ worth 100 of them: the net is trained on win probability, and what a pawn is
 worth in those units depends on the training data. net8x160's evaluation moves
 by about 270 when a pawn comes off the board, 700 for a knight and 1,400 for a
 queen, and the pawn's figure has grown from net to net
-([nets.md](nets.md#the-evaluations-scale-by-net)).
+([nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md#the-evaluations-scale-by-net)).
 
 - **Measuring it:** `nnue-scale --fens tests/openings/openings.epd` (in
   `crates/tools`) for the embedded net, `--net <file>` for any net file,
@@ -417,7 +427,7 @@ Updating the accumulators only for positions that are evaluated would skip
 ## Next
 
 1. **A pilot net:** the trainer, the preparation and the trainer-to-engine
-   check are in [training.md](training.md). The first pilot nets matched the
+   check are in [training.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/training.md). The first pilot nets matched the
    engine exactly, apart from quantization error (mean 9 cp).
 2. **Net 1, embedded and the default**, kept on a timed SPRT win over
    PeSTO (+587 ± 83 at 5+0.05); `datagen` played generation 1 with it.
@@ -425,4 +435,4 @@ Updating the accumulators only for positions that are evaluated would skip
    timed SPRT over net 1; `datagen` then plays generation 2 with it.
 4. **Next:** a longer schedule (net 2's held-out loss was still falling at
    superbatch 40), the λ experiment, and a wider hidden layer, each measured
-   against the net before it ([nets.md](nets.md)).
+   against the net before it ([nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md)).

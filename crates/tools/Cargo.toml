@@ -1,7 +1,7 @@
 [package]
 name = "braveheart-tools"
 version = "0.54.0"
-description = "Developer tools: perft suite runner, performance gate, bench and stats diffing, data generation"
+description = "Developer tools: perft suite runner, performance gate, bench and speed reports, openings, SPRT, match and rating reports, nnue-scale"
 edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
@@ -29,22 +29,6 @@ name = "openings"
 path = "src/bin/openings.rs"
 
 [[bin]]
-name = "datagen"
-path = "src/bin/datagen.rs"
-
-[[bin]]
-name = "relabel"
-path = "src/bin/relabel.rs"
-
-[[bin]]
-name = "datagen-audit"
-path = "src/bin/datagen_audit.rs"
-
-[[bin]]
-name = "nnue-eval"
-path = "src/bin/nnue_eval.rs"
-
-[[bin]]
 name = "nnue-scale"
 path = "src/bin/nnue_scale.rs"
 
@@ -69,11 +53,6 @@ braveheart-core = { path = "../core" }
 braveheart-search = { path = "../search" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-sha2 = "0.11"
-flate2 = "1"
-# The text parser and binary writer bullet's `convert --from text` uses; the
-# audit runs every sampled record through it.
-bulletformat = "=1.8.0"
 toml = "1.1"
 
 [lints]
