@@ -47,11 +47,11 @@ use braveheart_core::types::{Color, PieceKind, Square};
 
 /// A net embedded in the binary.
 pub struct EmbeddedNet {
-    /// Its id: `data/nets/<id>/` in the dataset bucket holds its
-    /// `training.json`, and `docs/nets.md` its history.
+    /// Its id: `<NET_STORE>/<id>/` holds its `training.json`, and
+    /// braveheart-trainer's `docs/nets.md` its history.
     pub id: &'static str,
-    /// The self-play generation it plays: `datagen` at this generation
-    /// evaluates with it (generation 0 is PeSTO).
+    /// The self-play generation it plays: braveheart-selfplay's `datagen` at
+    /// this generation evaluates with it (generation 0 is PeSTO).
     pub generation: u32,
     bytes: &'static [u8],
 }
@@ -76,15 +76,17 @@ pub const NETS: [EmbeddedNet; 1] = [EmbeddedNet {
 }];
 
 /// Where every trained net is kept, forever: `<NET_STORE>/<id>/net.nnue`,
-/// beside its `training.json`.
-pub const NET_STORE: &str = "s3://jwall-engineering-braveheart-nnue/data/nets";
+/// beside its `training.json`, in braveheart-trainer's bucket. The keys are
+/// unchanged from the buckets the nets were kept in before, so a path
+/// recorded under an older bucket names the same key here.
+pub const NET_STORE: &str = "s3://jwall-engineering-braveheart-trainer-nets/data/nets";
 
 /// A net that played an earlier generation and is no longer embedded. Its
 /// file is in [`NET_STORE`], byte for byte the file with this SHA-256, and
 /// the engine of the commit that generated its data embeds it (the audit
 /// re-searches a generation with a build at that commit).
 pub struct RetiredNet {
-    /// Its id (`docs/nets.md`).
+    /// Its id (braveheart-trainer's `docs/nets.md`).
     pub id: &'static str,
     /// The self-play generation it played.
     pub generation: u32,

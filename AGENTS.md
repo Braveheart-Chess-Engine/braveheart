@@ -1,6 +1,6 @@
 # Guidance for coding agents
 
-This repository is a single-threaded UCI chess engine in Rust. Read [README.md](README.md) for the layout, [docs/roadmap.md](docs/roadmap.md) for the phased plan and its exit gates, [docs/lessons-from-rusty-chess-v1.md](docs/lessons-from-rusty-chess-v1.md) for the bugs that sank the first attempt and the guards that catch them, and [CONTRIBUTING.md](CONTRIBUTING.md) for the full rules. The rules below are the ones you MUST follow.
+This repository is a single-threaded UCI chess engine in Rust: the engine, perft, bench, the performance gate, SPRT, matches, the rating ladder and the embedded net. Self-play data generation and relabelling live in [braveheart-selfplay](https://github.com/Braveheart-Chess/braveheart-selfplay), and NNUE training and the trainer's engine check (`nnue-eval`) in [braveheart-trainer](https://github.com/Braveheart-Chess/braveheart-trainer); each has its own `AGENTS.md`. Read [README.md](README.md) for the layout, [docs/roadmap.md](docs/roadmap.md) for the phased plan and its exit gates, [docs/lessons-from-rusty-chess-v1.md](docs/lessons-from-rusty-chess-v1.md) for the bugs that sank the first attempt and the guards that catch them, and [CONTRIBUTING.md](CONTRIBUTING.md) for the full rules. The rules below are the ones you MUST follow.
 
 ## Rules
 
@@ -17,7 +17,7 @@ This repository is a single-threaded UCI chess engine in Rust. Read [README.md](
 - **Never change search or eval without a bench run.** Put the `Bench: <nodes>` signature before and after in the PR description. A changed signature on a `perf` PR is a bug; a `perf` PR must leave the signature unchanged. Use `feat` for anything that changes the signature and `fix` for correctness (perft, TT, mate scores).
 - **Every measured layer ships with a coverage suite and a performance bar, and both only grow.** Move generation is covered by `tests/perft.epd` (append positions, never remove or change a line), search by the bench positions, efficiency by the `stats` counters. The bars live in `perf-targets.toml`; raise one when the engine clears it, never lower one. CI's `Bench` job runs `perf-gate`: speed bars are reported on every PR and enforced on release PRs, efficiency bars are always enforced, and a PR that loosens a bar fails. The same job posts the bench comment with deltas against the latest release; read it before claiming a speed or efficiency change, and quote its numbers in the PR description.
 - **Never claim an Elo gain without an SPRT result in the PR.** A `feat` that touches search or eval gets the `sprt` label; the `SPRT` workflow plays the PR against its base twice at once, timed at the `[sprt] tc` control and at fixed nodes per move, and posts both in one comment. **Both results gate** (the owner's rule since 2026-11-02): the timed one is what the engine does at a clock, the fixed-node one whether the search got smarter per node (fixed nodes alone reward a change that makes nodes dearer, and once overstated five releases' gains about sevenfold, so neither is enough alone). Quote both, and the comment's reading of the pair, in the PR description. Only an accepted H1 in **both** passes the check: H0 or an inconclusive result in either fails it, and a feature that does not gain Elo is reverted even if it looks right. A speed gain that is no smarter per node fails too. The owner may merge over a failed check for a reason stated in the PR (a speed change, an inconclusive result at high LOS, a correctness fix); an agent never does. Never run SPRT on a laptop and paste the numbers; the standardized runner is the record.
-- **Every experiment updates `docs/`.** Data generation, relabelling, training, SPRT, ratings and one-off measurements all get recorded, including smoke tests and failed, cancelled, interrupted and dropped runs. See [Experiments and the research record](#experiments-and-the-research-record).
+- **Every experiment updates `docs/`.** SPRT, matches, ratings and one-off measurements all get recorded, including smoke tests and failed, cancelled, interrupted and dropped runs; data generation, relabelling and training are recorded in their own repositories. See [Experiments and the research record](#experiments-and-the-research-record).
 
 ## Experiments and the research record
 
@@ -25,10 +25,11 @@ This project is research: a result counts only when someone else can reproduce i
 
 | When you run | Record it in |
 |:--|:--|
-| Datagen, a Relabel run, a generation's or label set's audit | [docs/datasets.md](docs/datasets.md) |
-| Training, a net's SPRT, a release's rating of a net | [docs/nets.md](docs/nets.md), and its "What we've learned" and "Next experiments" when the result changes what to try next |
-| A design measurement (relabelling, king buckets, datagen settings) | That topic's page in `docs/` |
+| Datagen, a Relabel run, a generation's or label set's audit | braveheart-selfplay's [docs/datasets.md](https://github.com/Braveheart-Chess/braveheart-selfplay/blob/main/docs/datasets.md) |
+| Training, a net's SPRT, a release's rating of a net | braveheart-trainer's [docs/nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md), and its "What we've learned" and "Next experiments" when the result changes what to try next |
+| A design measurement (search, evaluation, king buckets) | That topic's page in `docs/`; relabelling and datagen settings are braveheart-selfplay's |
 | Anything that completes or changes a phase item | [docs/roadmap.md](docs/roadmap.md) |
+| A research session | [docs/research-log.md](docs/research-log.md) is frozen at the split (2026-11-17): new entries go to the repository whose experiment it is |
 
 - **Record it promptly.** Use the same PR when the experiment has one. Otherwise open a docs PR when the run ends, before another experiment builds on the result.
 - **Decide before you run.** Write down the question, the one thing that changes, what stays the same and what result would keep or drop it. Don't move the criterion after seeing the result.

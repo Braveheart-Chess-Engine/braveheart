@@ -5,7 +5,10 @@ input layer a few sets of weights, chosen by where that side's own king
 stands. It records the decisions that are hard to reverse (the bucket
 layout, the feature indexing, the file format) and the plan for building
 and testing them. The architecture as it stands is in [nnue.md](nnue.md);
-the experiments that led here are in [nets.md](nets.md).
+the experiments that led here are in braveheart-trainer's
+[nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md). The trainer's half of the design
+(step 2 of the plan below, `train-task.sh`, `docs/training.md`) moved to
+[braveheart-trainer](https://github.com/Braveheart-Chess/braveheart-trainer) with the trainer.
 
 ## Why
 
@@ -27,7 +30,7 @@ g1 and one on b1 share weights. Positions are mostly symmetric that way;
 castling rights are not features.
 
 Other engines report this as the largest architecture gain after output
-buckets; it is the next experiment in [nets.md](nets.md#next-experiments).
+buckets; it is the next experiment in [nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md#next-experiments).
 Our SPRT decides whether it stays.
 
 ## The bucket layout (fixed in the format)
@@ -178,7 +181,7 @@ held-out positions (both sides counted), by bucket:
   bucket count, since 4 always means the table above.
 
 **The first king-bucketed net, net6k4** (full record in
-[nets.md](nets.md#net6k4-l050-r41282883885)):
+[nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md#net6k4-l050-r41282883885)):
 - **Training cost:** 3,891 s to trained against net6's 3,768 (+3%).
 - **Held-out loss:** −1.04% against net6 on identical positions, all of it
   after the first learning-rate drop (−0.04% at superbatch 36).

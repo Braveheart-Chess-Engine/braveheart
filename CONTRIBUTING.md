@@ -2,6 +2,8 @@
 
 This repo follows the conventions in [docs/repo-conventions.md](docs/repo-conventions.md). The short version: one-line Conventional Commits, every change through a pull request, squash or rebase merges only, releases cut by Release Please, and every search or evaluation change justified by a number.
 
+This repository is the engine. Self-play data generation, relabelling and their audits are in [braveheart-selfplay](https://github.com/Braveheart-Chess/braveheart-selfplay), and the NNUE trainer, the `Train` and `GPU smoke` workflows and `nnue-eval` in [braveheart-trainer](https://github.com/Braveheart-Chess/braveheart-trainer); changes to those go to that repository, under its own `CONTRIBUTING.md`. A new net reaches the engine here as an ordinary pull request with its SPRT.
+
 ## Workflow
 
 1. Branch from `main`.

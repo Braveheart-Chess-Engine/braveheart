@@ -18,14 +18,27 @@ author's surname, and Scotland has its own chess opening: the Scotch
 (1.e4 e5 2.Nf3 Nc6 3.d4), an open, aggressive start. The mascot follows suit:
 a snarling panther with a woad-blue face, a braid and a tartan scarf.
 
+**Self-play and training have their own repositories.** This one holds the
+engine and what measures it: perft, bench, the performance gate, SPRT, matches,
+the rating ladder and the embedded net. Self-play data generation, relabelling,
+their audits and the dataset ledger moved to
+[braveheart-selfplay](https://github.com/Braveheart-Chess/braveheart-selfplay); the bullet trainer, the
+`Train` and `GPU smoke` workflows, `nnue-eval` and the net ledger moved to
+[braveheart-trainer](https://github.com/Braveheart-Chess/braveheart-trainer). Both were split out
+with their history in November 2026 and build against a pinned engine release.
+A new net comes back here as an ordinary pull request, judged by its SPRT.
+
 Braveheart was called **rusty-chess-v2** through v0.52.0. The research record
-([docs/research-log.md](docs/research-log.md), [docs/nets.md](docs/nets.md),
-[docs/datasets.md](docs/datasets.md), [CHANGELOG.md](CHANGELOG.md)) keeps the
-old name where it describes what ran, and stored data schemas such as
-`rusty-chess-selfplay/1` keep it too, so existing data stays readable. The S3
-buckets and the remote-task project carried the old name until November 2026:
-a recorded path under `s3://jwall-engineering-rusty-chess-nnue/` is the same
-key under `s3://jwall-engineering-braveheart-nnue/`.
+([docs/research-log.md](docs/research-log.md), braveheart-trainer's
+[nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md),
+braveheart-selfplay's [datasets.md](https://github.com/Braveheart-Chess/braveheart-selfplay/blob/main/docs/datasets.md),
+[CHANGELOG.md](CHANGELOG.md)) keeps the old name where it describes what ran,
+and stored data schemas such as `rusty-chess-selfplay/1` keep it too, so
+existing data stays readable. The data has changed buckets twice, never its
+keys: a path recorded under `s3://jwall-engineering-rusty-chess-nnue/` or
+`s3://jwall-engineering-braveheart-nnue/` names the same key in
+`jwall-engineering-braveheart-selfplay-positions` (`data/selfplay/`) or
+`jwall-engineering-braveheart-trainer-nets` (`data/nets/`).
 
 The full plan is in [docs/roadmap.md](docs/roadmap.md), and the post-mortem of the
 first attempt that shaped it is [docs/lessons-from-rusty-chess-v1.md](docs/lessons-from-rusty-chess-v1.md).
@@ -41,8 +54,8 @@ contributors in [CONTRIBUTING.md](CONTRIBUTING.md) and for coding agents in
 | `src/` | The `braveheart` binary (root package): UCI protocol, `bench` and `perft` subcommands. |
 | `crates/core` | Board, bitboards, magics, move generation, Zobrist hashing, make/unmake. No dependencies. |
 | `crates/search` | Search, transposition table, move picker, evaluation (the embedded NNUE net, and PeSTO), `SearchStats` counters and the JSON lines telemetry writer. |
-| `crates/tools` | Perft suite runner, bench and stats diffing, SPRT and match reports, `datagen`, the self-play data generator for NNUE ([docs/datagen.md](docs/datagen.md)), `datagen-audit`, which checks a dataset before training ([docs/datagen-runbook.md](docs/datagen-runbook.md)), and `nnue-scale`, which measures what a net values each piece at ([docs/nnue.md](docs/nnue.md#the-evaluations-units)). |
-| `trainer` | Trains NNUE nets with bullet (CUDA or Metal); a separate Cargo project so the engine never needs a GPU toolkit ([docs/training.md](docs/training.md)). |
+| `crates/tools` | Perft suite runner, the performance gate, bench, speed and stats reports, the openings generator, SPRT, match and rating reports, and `nnue-scale`, which measures what a net values each piece at ([docs/nnue.md](docs/nnue.md#the-evaluations-units)). |
+| `ci/` | The work the dedicated instances run: `strength-task.sh` (SPRT) and `match-task.sh` (Match). |
 | `tests/` | UCI smoke tests, the perft suite `perft.epd`, mate-in-N positions. |
 | `perf-targets.toml` | The performance bars `perf-gate` enforces; they only go up. |
 | `benches/` | Criterion microbenchmarks for the binary; crates keep their own under `crates/*/benches`. |
@@ -90,9 +103,12 @@ release, whose telemetry is attached to the GitHub release as assets. See
 [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Every release's numbers, with the full history, are in [docs/benchmarks.md](docs/benchmarks.md).
-Every NNUE net and every self-play dataset, with its data, parameters and
-results, is in [docs/nets.md](docs/nets.md) and [docs/datasets.md](docs/datasets.md);
-a diagram of every net's architecture is in [docs/nnue-architectures/](docs/nnue-architectures/README.md).
+Every NNUE net, with its data, parameters and results, is in
+braveheart-trainer's [nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md),
+with a diagram of every net's architecture in its
+[nnue-architectures/](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nnue-architectures/README.md);
+every self-play dataset is in braveheart-selfplay's
+[datasets.md](https://github.com/Braveheart-Chess/braveheart-selfplay/blob/main/docs/datasets.md).
 To watch the engine play other engines locally, see
 [tools/engine-battle/README.md](tools/engine-battle/README.md): EngineBattle,
 with Stockfish and Viridithas as opponents, for viewing rather than measuring.

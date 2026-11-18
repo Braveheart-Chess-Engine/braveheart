@@ -1,5 +1,16 @@
 # Research log
 
+> **Frozen at the split (2026-11-17).** Self-play data generation and
+> relabelling moved to
+> [braveheart-selfplay](https://github.com/Braveheart-Chess/braveheart-selfplay),
+> and training and the nets to
+> [braveheart-trainer](https://github.com/Braveheart-Chess/braveheart-trainer).
+> This log is the record of the sessions before that and takes no new
+> entries. New entries go to the repository whose experiment it is, under
+> the same research-record rules, which each repository's `AGENTS.md`
+> restates. Links to pages that moved point to their new homes; nothing
+> below is otherwise changed.
+
 A running record of research sessions: what was read, which hypotheses were
 considered and how they were ranked, what was screened and dropped before it
 reached a pull request, and what each experiment measured. An experiment's own
@@ -130,7 +141,7 @@ one local SPSA run and sixteen local screens.
 - **Net:** `net8-l050-r42564788061`, (768 × 4 → 512) × 2 → 8, generations 0–6,
   the default since `v0.48.0`. It passed both legs against net7rl012:
   **+14.1 ± 6.9** timed, **+8.8 ± 5.3** at fixed nodes (#235).
-- **A gap in the ledger:** [nets.md](nets.md) still listed net8 as "SPRT
+- **A gap in the ledger:** [nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md) still listed net8 as "SPRT
   pending". Corrected in this PR from #235's SPRT comment.
 - **Search:** everything in [roadmap.md](roadmap.md) Phases 3–4b, plus the
   pawn correction history (#221). Its constants were all set with PeSTO as the
@@ -194,7 +205,7 @@ otherwise: 80 superbatches were 5.5 passes over net 5's data and are 2.6 over
 net8's, and the ledger's own advice is to revisit length when the data grows a
 lot. It costs a `Train` run and an SPRT and uses the GPU instance, which was
 idle, so it does not take from the search experiments. Its plan and record are
-in [nets.md](nets.md#net8x160-l050-r43390801430).
+in [nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md#net8x160-l050-r43390801430).
 
 ### Method
 
@@ -420,7 +431,7 @@ SPRT openings, and over the 50 bench positions in brackets:
 - **The pieces jumped once.** Knights, bishops and rooks sat near 560, 650 and
   780 from net 1 to net7, then rose by a quarter in one step, to 703, 818 and
   981, with net7rl012: the net trained on generations 0–2 relabelled by net7,
-  whose labels [datasets.md](datasets.md#net7-l050-r41363264869-n5000) records
+  whose labels [datasets.md](https://github.com/Braveheart-Chess/braveheart-selfplay/blob/main/docs/datasets.md#net7-l050-r41363264869-n5000) records
   as larger than the originals.
 - **That step is also the largest net gain since king buckets** (+16.3 timed,
   +18.1 at fixed nodes, #202), and the ledger reads it as better labels making a
@@ -431,7 +442,7 @@ SPRT openings, and over the 50 bench positions in brackets:
   moved, gained nothing (#210). **Not established here; matches M16 and M17
   ask the question the cheap way,** by scaling net8's evaluation in the search
   and seeing which way the engine wants its margins.
-- **For the ledger:** each net's scale belongs in [nets.md](nets.md) beside its
+- **For the ledger:** each net's scale belongs in [nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md) beside its
   loss, measured when it is trained, so a change in the search's effective
   margins is seen when it happens.
 
@@ -1255,7 +1266,7 @@ fixed-node leg is recorded as not played.
 
 #### Training T1: net8x160
 
-The plan is in [nets.md](nets.md#net8x160-l050-r43390801430), recorded in `2160aea` at
+The plan is in [nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md#net8x160-l050-r43390801430), recorded in `2160aea` at
 08:07:36 UTC, before the dispatch at 08:07:49.
 
 | Run | Started (UTC) | Outcome |
@@ -1263,7 +1274,7 @@ The plan is in [nets.md](nets.md#net8x160-l050-r43390801430), recorded in `2160a
 | [43390801430](https://github.com/jwallace145/rusty-chess-v2/actions/runs/43390801430) | 2026-11-13 08:07 | Net id `net8x160-l050-r43390801430`. An on-demand `g6.xlarge` (`i-0573b746d7245e4b6`, us-east-1b) launched at the first try, at 08:08:36. **Trained** in 7,118 s; the job ended at 10:09:08 |
 
 **Result of the training** (the net's `training.json`; the full record is in
-[nets.md](nets.md#net8x160-l050-r43390801430)): the data's SHA-256s equal
+[nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md#net8x160-l050-r43390801430)): the data's SHA-256s equal
 net8's, the engine check passed (mean 7.28 cp), and the held-out loss is
 **0.019921 against net8's 0.020037 on identical records, −0.58%**, a little
 better than the plan's 0.2 to 0.5%. Its SPRT is #256, a draft that embeds the
@@ -1578,7 +1589,7 @@ the owner's release workflow; figures from the release notes):
   other opponents, and this ladder cannot say how much less: it would take
   several thousand games a release to resolve 25 Elo.
 - **Not a result of this session:** the run is the release's, started by the
-  owner's merge. It is recorded in [nets.md](nets.md) with the other releases.
+  owner's merge. It is recorded in [nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md) with the other releases.
 - **`v0.50.0`, added when its run finished** (`Rating` run
   [43472083980](https://github.com/jwallace145/rusty-chess-v2/actions/runs/43472083980),
   18:19 UTC): 3219 ± 32 for the engine with both search changes, still under
@@ -1699,7 +1710,7 @@ branch was pushed.
 | Question | Does futility pruning of captures still gain, per node and at a clock, in `v0.51.0`: with the adaptive null-move reduction (#246), one more ply of late-move reduction at expected cut nodes (#254) and net8x160 (#256)? |
 | The one change from the first run | The base: `main` at `363e172` (`v0.51.0` and this log's docs) for `0a45da0` (`v0.48.1`). The patch is the first run's: `feat/capture-futility` at `1aa1655`, rebased without conflict from `cb6dfbc`, and `git range-diff` reports the two commits equal |
 | Held the same | The SPRT's settings (elo0 0, elo1 5, α = β = 0.05; 5+0.05 and 200,000 nodes a move; the same openings and cap), the instance type and market, and every constant of the patch |
-| Left as it was, though its premise moved | `CAPTURE_VALUE`, what a capture is worth to the evaluation, was measured on net8 (300, 775, 880, 1,100, 1,680 for pawn to queen). The default is net8x160 now, whose knight, bishop, rook and queen read 2% to 7% smaller on the SPRT openings and whose pawn reads 2% larger ([nets.md](nets.md#net8x160-l050-r43390801430)). The table was not re-measured: that would be a second variable, and a table that is too large only prunes less |
+| Left as it was, though its premise moved | `CAPTURE_VALUE`, what a capture is worth to the evaluation, was measured on net8 (300, 775, 880, 1,100, 1,680 for pawn to queen). The default is net8x160 now, whose knight, bishop, rook and queen read 2% to 7% smaller on the SPRT openings and whose pawn reads 2% larger ([nets.md](https://github.com/Braveheart-Chess/braveheart-trainer/blob/main/docs/nets.md#net8x160-l050-r43390801430)). The table was not re-measured: that would be a second variable, and a table that is too large only prunes less |
 | Bench, local | 919304 → 878901 (−4.4% nodes to depth 10: the main search 3.1% smaller, quiescence 5.6% smaller; against `v0.48.1` the tree's size did not change, 970013 → 970114); fail-high-first 0.8778 → 0.8802 (bar 0.87); EBF 1.861 → 1.847 (bar 2.0); both bars pass; 11,825 captures skipped. The base's figures are the release's own record (`benchmarks/v0.51.0/`); they are counts, the same on any machine |
 | Expectation | Fixed nodes: H1 again, somewhere near the first run's reading. Timed: about +4, as the 20,000 timed games already played say. At +4.0 the test reaches H1 before its cap about four times in ten (a normal approximation from the first run's own LLR, 2.61 at +4.9 after 10,000 games), so the likeliest single outcome is the first run's again |
 | Gate | H1 in both legs, against this base. Nothing carries over from the first run or from M18 |
