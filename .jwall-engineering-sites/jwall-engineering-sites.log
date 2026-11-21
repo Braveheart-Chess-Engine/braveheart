@@ -1,8 +1,0 @@
-2026-11-15 17:00:44,159 DEBUG   jwall-engineering-sites 0.26.0, config /Users/jimmywallace/Projects/computer-science/cloud-infra/jwall-engineering-infra/config.yaml
-2026-11-15 17:00:44,163 DEBUG   project braveheart (research), state key project=braveheart/env=prod/braveheart-prod.tfstate
-2026-11-15 17:00:44,163 INFO    == validate
-2026-11-15 17:00:44,163 DEBUG   phase validate started
-2026-11-15 17:00:44,163 INFO    project file ok: project braveheart, kind research
-2026-11-15 17:00:44,163 INFO    derived: state key project=braveheart/env=prod/braveheart-prod.tfstate
-2026-11-15 17:00:44,164 DEBUG   phase validate finished
-2026-11-15 17:00:44,164 ERROR   bot stack not found at stacks/bot

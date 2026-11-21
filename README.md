@@ -34,11 +34,13 @@ Braveheart was called **rusty-chess-v2** through v0.52.0. The research record
 braveheart-selfplay's [datasets.md](https://github.com/Braveheart-Chess/braveheart-selfplay/blob/main/docs/datasets.md),
 [CHANGELOG.md](CHANGELOG.md)) keeps the old name where it describes what ran,
 and stored data schemas such as `rusty-chess-selfplay/1` keep it too, so
-existing data stays readable. The data has changed buckets twice, never its
-keys: a path recorded under `s3://jwall-engineering-rusty-chess-nnue/` or
-`s3://jwall-engineering-braveheart-nnue/` names the same key in
-`jwall-engineering-braveheart-selfplay-positions` (`data/selfplay/`) or
-`jwall-engineering-braveheart-trainer-nets` (`data/nets/`).
+existing data stays readable. The data has changed buckets three times, never
+its keys: a path recorded under `s3://jwall-engineering-rusty-chess-nnue/`,
+`s3://jwall-engineering-braveheart-nnue/` or the management account's
+`jwall-engineering-braveheart-*` buckets names the same key in the production
+account's `jaws-braveheart-selfplay-positions` (`data/selfplay/`) or
+`jaws-braveheart-trainer-nets` (`data/nets/`). The old buckets were deleted on
+2026-11-21, after a byte-for-byte check against the production copies.
 
 The full plan is in [docs/roadmap.md](docs/roadmap.md), and the post-mortem of the
 first attempt that shaped it is [docs/lessons-from-rusty-chess-v1.md](docs/lessons-from-rusty-chess-v1.md).
