@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.55.1](https://github.com/Braveheart-Chess/braveheart/compare/v0.55.0...v0.55.1) (2026-11-21)
+
+
+### Bug Fixes
+
+* **nnue:** name the trainer's production bucket in NET_STORE ([#281](https://github.com/Braveheart-Chess/braveheart/issues/281)) ([1a0f4aa](https://github.com/Braveheart-Chess/braveheart/commit/1a0f4aa75d306b6c9927cbd58a04219793a6e81d))
+
 ## [0.55.0](https://github.com/Braveheart-Chess/braveheart/compare/v0.54.0...v0.55.0) (2026-11-18)
 
 
