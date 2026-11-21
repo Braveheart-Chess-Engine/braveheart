@@ -79,7 +79,7 @@ pub const NETS: [EmbeddedNet; 1] = [EmbeddedNet {
 /// beside its `training.json`, in braveheart-trainer's bucket. The keys are
 /// unchanged from the buckets the nets were kept in before, so a path
 /// recorded under an older bucket names the same key here.
-pub const NET_STORE: &str = "s3://jwall-engineering-braveheart-trainer-nets/data/nets";
+pub const NET_STORE: &str = "s3://jaws-braveheart-trainer-nets/data/nets";
 
 /// A net that played an earlier generation and is no longer embedded. Its
 /// file is in [`NET_STORE`], byte for byte the file with this SHA-256, and

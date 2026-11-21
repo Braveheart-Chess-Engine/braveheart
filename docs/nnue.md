@@ -321,9 +321,10 @@ Every earlier generation's net is **retired**: listed in `nnue::RETIRED_NETS`
 with its id, generation and the SHA-256 of its file, and kept forever in
 braveheart-trainer's bucket as `data/nets/<net id>/net.nnue` beside its
 `training.json` (`nnue::NET_STORE`,
-`s3://jwall-engineering-braveheart-trainer-nets/data/nets`). The nets were
-copied there key for key at the split; until then `NET_STORE` named the same
-keys in `jwall-engineering-braveheart-nnue`.
+`s3://jaws-braveheart-trainer-nets/data/nets`, in the production account since
+2026-11-21). The nets were copied key for key at each move; before that
+`NET_STORE` named the same keys in `jwall-engineering-braveheart-trainer-nets`
+and, until the split, `jwall-engineering-braveheart-nnue`.
 
 | Net | Played generation | Trained on | Bench signature | |
 |:--|--:|:--|--:|:--|
